@@ -1,8 +1,11 @@
+from xml.dom.minidom import AttributeList
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView
+from django.urls import reverse
 
 from .models import Animal
 
@@ -32,6 +35,32 @@ class AnimalList(TemplateView):
         return context
 
 
-class ArtistCreate(CreateView):
+class AnimalCreate(CreateView):
     model = Animal
-    fields['name', 'img', 'bio', 'extinct_animal']
+    fields = ['name', 'img', 'bio', 'extinct_animal']
+    template_name = "animal_create.html"
+    success_url = "/animals/"
+
+    def get_success_url(self):
+        return reverse('animal_detail', kwargs={'pk': self.object.pk})
+
+
+class AnimalDetail(DetailView):
+    model = Animal
+    template_name = "animal_detail.html"
+
+
+class AnimalUpdate(UpdateView):
+    model = Animal
+    fields = ['name', 'img', 'bio', 'extinct_animal']
+    template_name = "animal_update.html"
+    success_url = "/animals/"
+
+    def get_success_url(self):
+        return reverse('animal_detail', kwargs={'pk': self.object.pk})
+
+
+class AnimalDelete(DeleteView):
+    model = Animal
+    template_name = "animal_delete_confirmation.html"
+    success_url = "/animals/"
