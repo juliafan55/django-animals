@@ -33,6 +33,27 @@
         <h4 class="title is-4">About</h4>
         <p>{{animal.bio}}</p>
     </div>
+    <!-- inside container -->
+  <div class="detail__songs mb-5">
+    <h3 class="title is-3">Group:</h3>
+    {% for group in animal.groups.all %}
+    <div class="group">
+      <span><b>{{group.name}}</b></span>
+    </div>
+		{% empty %}
+    <article class="message">
+      <div class="message-header">
+        <p>No Groups Available</p>
+      </div>
+    </article>
+
+    {% endfor %}
+  </div>
+<!--  above about section  -->
+    </article>
+
+  </div>
+<!--  above about section  -->
 </div>
 
 {% endblock %}

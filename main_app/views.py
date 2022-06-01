@@ -7,13 +7,18 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from django.urls import reverse
 
-from .models import Animal
+from .models import Animal, Location
 
 # Create your views here.
 
 
 class Home(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['locations'] = Location.objects.all()
+        return context
 
 
 class About(TemplateView):
